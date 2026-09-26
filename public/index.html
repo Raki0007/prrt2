@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>prrt2 — realtime chat</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💬</text></svg>" />
+</head>
+<body>
+
+  <!-- ============================ AUTH SCREEN ============================ -->
+  <section id="auth-screen" class="auth-screen">
+    <div class="auth-card">
+      <div class="auth-brand">
+        <span class="auth-logo">💬</span>
+        <h1>prrt2 chat</h1>
+        <p class="auth-tagline">Register with a unique ID, find people, chat in realtime.</p>
+      </div>
+
+      <div class="auth-tabs">
+        <button id="tab-login" class="auth-tab active" type="button">Log in</button>
+        <button id="tab-register" class="auth-tab" type="button">Register</button>
+      </div>
+
+      <form id="login-form" class="auth-form" novalidate>
+        <label>
+          User ID
+          <input id="login-id" type="text" autocomplete="username" placeholder="your_unique_id" required />
+        </label>
+        <label>
+          Password
+          <input id="login-password" type="password" autocomplete="current-password" placeholder="••••••••" required />
+        </label>
+        <button class="btn btn-primary btn-block" type="submit">Log in</button>
+      </form>
+
+      <form id="register-form" class="auth-form hidden" novalidate>
+        <label>
+          Pick a unique User ID
+          <input id="register-id" type="text" autocomplete="off" placeholder="e.g. nova_99" required />
+        </label>
+        <label>
+          Password
+          <input id="register-password" type="password" autocomplete="new-password" placeholder="at least 6 characters" required />
+        </label>
+        <label>
+          Confirm password
+          <input id="register-confirm" type="password" autocomplete="new-password" placeholder="repeat password" required />
+        </label>
+        <button class="btn btn-primary btn-block" type="submit">Create account</button>
+      </form>
+
+      <p id="auth-error" class="auth-error" role="alert"></p>
+      <p id="auth-info" class="auth-info"></p>
+    </div>
+  </section>
+
+  <!-- ============================ CHAT SCREEN ============================= -->
+  <main id="chat-screen" class="chat-screen hidden">
+    <aside class="sidebar">
+      <header class="sidebar-header">
+        <div class="me">
+          <span id="me-avatar" class="avatar"></span>
+          <div class="me-meta">
+            <strong id="me-id"></strong>
+            <span class="me-status"><span class="dot dot-online"></span> online</span>
+          </div>
+        </div>
+        <button id="logout-btn" class="btn btn-ghost btn-sm" type="button" title="Log out">Log out</button>
+      </header>
+
+      <div class="search-box">
+        <input id="search-input" type="text" placeholder="Find people by ID…" autocomplete="off" />
+      </div>
+
+      <nav class="sidebar-nav">
+        <button id="nav-people" class="nav-tab active" type="button">People</button>
+        <button id="nav-chats" class="nav-tab" type="button">Chats <span id="chat-badge" class="badge hidden"></span></button>
+      </nav>
+
+      <ul id="people-list" class="list"></ul>
+      <ul id="conversations-list" class="list hidden"></ul>
+    </aside>
+
+    <section id="chat-panel" class="chat-panel">
+      <div id="empty-state" class="empty-state">
+        <div class="empty-icon">👋</div>
+        <h2>Start a conversation</h2>
+        <p>Search for someone in the sidebar and pick them to start chatting in realtime.</p>
+      </div>
+
+      <div id="conversation-view" class="conversation-view hidden">
+        <header class="conversation-header">
+          <span id="peer-avatar" class="avatar"></span>
+          <div class="peer-meta">
+            <strong id="peer-id"></strong>
+            <span id="peer-status" class="peer-status">offline</span>
+          </div>
+        </header>
+
+        <div id="messages" class="messages" role="log" aria-live="polite"></div>
+
+        <div id="typing-indicator" class="typing-indicator hidden">
+          <span class="typing-dots"><i></i><i></i><i></i></span>
+          <span id="typing-text">typing…</span>
+        </div>
+
+        <form id="message-form" class="composer">
+          <textarea id="message-input" rows="1" placeholder="Type a message… (Enter to send, Shift+Enter for newline)"></textarea>
+          <button id="send-btn" class="btn btn-primary" type="submit" title="Send">Send</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

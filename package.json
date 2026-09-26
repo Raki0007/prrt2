@@ -1,0 +1,22 @@
+{
+  "name": "prrt2-chat",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Realtime chat app: register with a unique ID + password, find other users, and chat in realtime.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --no-warnings server.js",
+    "test": "node --no-warnings test/e2e.mjs"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "express": "^4.21.2",
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "socket.io-client": "^4.8.1"
+  }
+}
